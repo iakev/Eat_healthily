@@ -1,0 +1,4 @@
+EH_MYSQL_USER='ehdev'
+EH_MYSQL_PWD='ehdevpwd'
+EH_MYSQL_HOST='localhost'
+EH_MYSQL_DB='ehdevdb'

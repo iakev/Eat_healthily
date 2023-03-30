@@ -1,0 +1,5 @@
+-- Commands to create database development for Eat Healthily and user
+CREATE DATABASE IF NOT EXISTS ehdevdb;
+CREATE USER IF NOT EXISTS 'ehdev'@'localhost' IDENTIFIED BY 'ehdevpwd';
+GRANT ALL ON ehdevdb.* TO 'ehdev'@'localhost';
+GRANT SELECT ON perfomance_schema.* TO 'ehdev'@'localhost';
