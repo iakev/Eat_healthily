@@ -24,14 +24,14 @@ class Input(Base):
     __tablename__ = "inputs"
     input_name: Mapped[str] = mapped_column(String(128), nullable=False)
     manufactring_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    expiry_data: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    expiry_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     source: Mapped[str] = mapped_column(String(128), nullable=False)
     cautions: Mapped[str] = mapped_column(String(255), nullable=True)
     pre_harvest_interval: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     toxicity_level: Mapped[enum.Enum] = mapped_column(Enum(ToxLevels), nullable=True)
     ingredient: Mapped[str] = mapped_column(String(255), nullable=True)
-    image_file_name: Mapped[str] = mapped_column(String(128), nullable=True)
-    label_file_name: Mapped[str] = mapped_column(String(128), nullable=True)
+    image_file: Mapped[str] = mapped_column(String(128), nullable=True)
+    label_file: Mapped[str] = mapped_column(String(128), nullable=True)
     user_manual_file_name: Mapped[str] = mapped_column(String(128), nullable=True)
 
     # produce_operation_id: Mapped[str] = mapped_column(ForeignKey("produce_operation.id")) 
