@@ -53,6 +53,22 @@ def get_farm_products(farm_id):
         products.append(farm_prod_dict)
     return jsonify(products)
 
+@app_views.route('/products/<product_id>', methods=['GET'], strict_slashes=False)
+def get_product_farm_products(product_id):
+    """Retrieves a list of all farm_producsts asociated with a product"""
+    produce = storage.get(Produce, product_id)
+    if not produce:
+        abort(404)
+    farm_products = []
+    for farm_produce in produce.farms:
+        if farm_produce not in farm_products:
+            farm_produce_dict = farm_produce.to_dict()
+            farm_produce_dict['produce_name'] = produce.produce_name
+            farm_produce_dict['farm_name'] = farm_produce.farm.farm_name
+            farm_produce_dict['address'] = farm_produce.farm.address
+            farm_products.append(farm_produce_dict)
+    return jsonify(farm_products)
+
 @app_views.route('/products/<product_id>/farms', methods=['GET'], strict_slashes=False)
 def get_produce_farms(product_id):
     """Retrieves a list of all farms associated with a product"""
