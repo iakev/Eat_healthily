@@ -62,9 +62,12 @@ export default{
                         if (this.authenticated) {
                             this.userStore.user = this.user;
                         if (this.user.type === 'farmer') {
-                            this.$router.push('/farmerdash');
+                            this.$router.push({
+                                name: 'farmer',
+                                params: {farmer_id: this.user.id}
+                            });
                         } else {
-                            this.$router.push('/');
+                            this.$router.push('/consumerdash');
                         }
                     } else {
                         alert("incorrect email or password");
