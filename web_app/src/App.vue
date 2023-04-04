@@ -17,7 +17,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <div id="wrapper">
       <nav class="navbar is-info" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-          <a class="navabr-item"><b>Eat Healthily</b></a>
+          <RouterLink class="navbar-item" to="/consumerdash"><b>Eat Healthily</b></RouterLink>
         
           <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBurger">
           <span aria-hidden="true"></span>
@@ -29,7 +29,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <!-- <div class="navbar-start">
         </div> -->
           <div class="navbar-end">
-            <RouterLink class="navbar-item" to="/">Home</RouterLink>
+            <RouterLink class="navbar-item" to="/consumerdash">Home</RouterLink>
             <RouterLink class="navbar-item" to="/login">Login</RouterLink>
             <RouterLink class="navbar-item" to="/signup">Signup</RouterLink> 
           </div>
