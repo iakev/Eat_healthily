@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 """Module that describes the produce API endpoints"""
 from api.v1.views import app_views
+from flask import current_app
 from flask import abort, jsonify, make_response, request
 from models import storage
 from models.products import Produce
+
 
 @app_views.route('/products', methods=['GET'], strict_slashes=False)
 def get_products():
