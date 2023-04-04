@@ -27,18 +27,6 @@ farm_produce_operation_input = Table(
     Column("input_id", ForeignKey("inputs.id", ondelete="CASCADE"))    
 )
 
-# class FarmProduceOperation(Base):
-#     """Association table for product and operation"""
-#     __tablename__ = "farm_produce_operation"
-#     farm_product_id: Mapped[str] = mapped_column(ForeignKey("farm_produce.id", ondelete="CASCADE"))
-#     operation_id: Mapped[str] = mapped_column(ForeignKey("operations.id", ondelete="CASCADE"))
-#     operation_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-#     description: Mapped[str] = mapped_column(String(255), nullable=True)
-#     inputs: Mapped[List["Input"]] = relationship(back_populates="farm_produce_operation")
-
-#     farm_produce: Mapped["FarmProduce"] = relationship(back_populates="operations")
-#     operation: Mapped["Operation"] = relationship(back_populates="farm_produce")
-
 class FarmProduceOperation(Base):
     """Liking a farm_produce with operation"""
     __tablename__ = "farm_produce_operation"
@@ -57,6 +45,7 @@ class FarmProduce(Base):
     farm_id: Mapped[str] = mapped_column(ForeignKey("farms.id", ondelete="CASCADE"))
     produce_id: Mapped[str] = mapped_column(ForeignKey("products.id", ondelete="CASCADE"))
     planting_date: Mapped[datetime] =  mapped_column(DateTime, nullable=False)
+    image_file: Mapped[str] = mapped_column(String(128), nullable=False)
     harvest_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
     farm: Mapped["Farm"] = relationship(back_populates="products")
@@ -83,6 +72,7 @@ class Farm(Base):
     __tablename__ = "farms"
     farm_name: Mapped[str] = mapped_column(String(128), nullable=False, unique=True)
     address: Mapped[str] = mapped_column(String(128), nullable=False)
+    image_file: Mapped[str] = mapped_column(String(128), nullable=True)
     # operations: Mapped[List["Operation"]] = relationship(back_populates="farm")
 
     farmers: Mapped[List["Farmer"]] = relationship("Farmer", secondary="farmers_farm", back_populates="farms")
@@ -92,7 +82,3 @@ class Farm(Base):
     def __init__(self, *args, **kwargs):
         """initializes farm"""
         super().__init__(*args, **kwargs)
-
-    
-    
-   
