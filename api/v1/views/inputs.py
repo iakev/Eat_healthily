@@ -2,8 +2,23 @@
 """Defining API endpoints for inputs"""
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+from flask import current_app
 from models import storage
 from models.inputs import Input
+import os
+from werkzeug.utils import secure_filename
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
+
+def allowed_filename(filename):
+    """validate an extension is valid before upload"""
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def upload_file(file):
+    """Method to upload files and save them in a folder specified"""
+    filename = secure_filename(file.filename)
+    return filename
 
 @app_views.route('/inputs', methods=['GET'], strict_slashes=False)
 def get_inputs():
@@ -29,7 +44,27 @@ def post_inputs():
         abort(400, description="Missing input_name") 
     if 'source' not in request.get_json():
         abort(400, description="Missing input source")
+    if request.files:
+        if 'image_file' in request.files:
+            image_file = request.files['image_file']
+            if image_file and allowed_filename(image_file.filename):
+                image_file_name = upload_file(image_file)
+                image_file.save(os.pth.join(current_app.config['UPLOAD_FOLDER'],  image_file_name))
+        if 'label_file' in request.files:
+            label_file = request.files['label_file']
+            if label_file and allowed_filename(label_file.filename):
+                label_file_name = upload_file(label_file)
+                label_file.save(os.pth.join(current_app.config['UPLOAD_FOLDER'],  label_file_name))
+        if 'user_manual_file' in request.files:
+            user_manual_file = request.files['user_manual_file']
+            if user_manual_file and allowed_filename(user_manual_file.filename):
+                user_manual_file_name = upload_file(user_manual_file)
+                user_manual_file.save(os.pth.join(current_app.config['UPLOAD_FOLDER'],  user_manual_file_name))
+
     data = request.get_json()
+    data['image_file'] = image_file_name
+    data['label_file'] = label_file_name
+    data['user_manual_file_name'] = user_manual_file_name
     input = Input(**data)
     input.save()
     return make_response(jsonify(input.to_dict(), 201))
