@@ -15,6 +15,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(128), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(128), nullable=False)
     phone: Mapped[str] = mapped_column(String(128))
+    image_file: Mapped[str] = mapped_column(String(128), nullable=True)
     type: Mapped[str] = mapped_column(String(128))
 
     __mapper_args__ = {
