@@ -9,7 +9,7 @@
                     <div v-for="farm in farms" :key="farm.id">
                         <div class="box">
                             <h3 class="is-size-4">
-                                {{ farm.farm_name }}
+                                <RouterLink :to="{name: 'farm', params:{farm_id: farm.id}}">{{ farm.farm_name }}</RouterLink>
                             </h3>
                         </div>
                     </div>
@@ -63,12 +63,6 @@
                                     <input class="input is-focused" type="text" placeholder="Farm Name" v-model="selected_farm">
                                 </div>
                             </div>
-                            <!-- <div class="field">
-                                <label class="label">Product Name</label>
-                                <div class="control">
-                                    <input class="input is-focused" type="text" placeholder="Product Name">
-                                </div>
-                            </div> -->
                             <div class="select is-info">
                                 <select v-model="selected_product">
                                     <option value="" selected disabled>Choose Product</option>
@@ -148,6 +142,21 @@
                                     </div>
                                 </div>                   
                             </div>
+                            <div class="field-body">
+                                <div class="filed">
+                                    <div class="control">
+                                        <label class="checkbox">
+                                            <input type="checkbox" v-model="createInput">
+                                            Create a new input?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="createInput">
+                                <div class="buttons">
+                                    <RouterLink to="/inputs"><button class="button is-link"></button></RouterLink>>
+                                </div>
+                            </div>
                             <div  v-if="addInput" class="select is-info">
                                 <select v-model="selected_input">
                                     <option value="" selected disabled>Choose input</option>
@@ -173,15 +182,8 @@
 
 <script>
 import axios from 'axios';
-import { useUserStore } from '../stores/users';
-import { useProductStore } from '../stores/products';
 
 export default{
-    setup (){
-        const userStore = useUserStore();
-        const ProductStore = useProductStore();
-        return { userStore, ProductStore };
-    },
     name: 'FarmerPageView',
     data () {
         return {
@@ -196,6 +198,7 @@ export default{
             selected_farm: "",
             farm_id: "",
             produce_id: "",
+            farmer_id: this.$route.params.farmer_id,
             planting_date: "",
             farm_produce: {},
             addOperation: false,
@@ -209,7 +212,8 @@ export default{
             description: "",
             inputs: [],
             addInput: false,
-            input_id: ""
+            input_id: "",
+            createInput: false
         }
     },
     mounted () {
@@ -220,7 +224,7 @@ export default{
     methods: {
         async getFarms() {
             await axios
-                .get(`api/v1/farmers/${this.userStore.user.id}/farms`)
+                .get(`api/v1/farmers/${this.farmer_id}/farms`)
                 .then(response => {
                     this.farms = response.data;
                 })
@@ -234,7 +238,7 @@ export default{
                 address: this.address
             }
             await axios
-                .post(`api/v1/farmers/${this.userStore.user.id}/farms`, data)
+                .post(`api/v1/farmers/${this.farmer_id}/farms`, data)
                 .then(response => {
                     this.farm = response.data;
                 })
