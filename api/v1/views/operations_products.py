@@ -67,10 +67,27 @@ def get_product_operations(farm_product_id):
     operations = []
     for farm_produce_operation in farm_produce.operations:
         farm_produce_operation_dict = farm_produce_operation.to_dict()
+        farm_produce_operation_dict['produce_name'] = farm_produce.produce.produce_name
+        farm_produce_operation_dict['planting_date'] = farm_produce.planting_date
+        farm_produce_operation_dict['harvest_date'] = farm_produce.harvest_date
+        farm_produce_operation_dict['farm-name'] = farm_produce.farm.farm_name
+        farm_produce_operation_dict['address'] = farm_produce.farm.address
         farm_produce_operation_dict['operation_name'] = farm_produce_operation.operation.operation_name
         farm_produce_operation_dict['inputs'] = []
         for input in farm_produce_operation.inputs:
             farm_produce_operation_dict['inputs'].append(input.to_dict())
+            if input.pre_harvest_interval and input.pre_harvest_interval < (farm_produce_operation.operation_date - farm_produce_operation_dict['harvest_date']).days:
+                farm_produce_operation_dict['phi_safe'] = True
+            else:
+                farm_produce_operation_dict['phi_safe'] = False
+            if input.toxicity_level and input.toxicty_level !='level_4_slightly_toxic' or input.toxicity_level != 'level_5_non_toxic':
+                farm_produce_operation_dict['toxic_safe'] = False
+            else:
+                farm_produce_operation_dict['toxic_safe'] = True
+            if input.expiry_data and input.expiry_data < farm_produce_operation.operation_date:
+                farm_produce_operation_dict['expiry_safe'] = False
+            else:
+                farm_produce_operation_dict['expiry_safe'] = True
         if farm_produce_operation_dict not in operations:
             operations.append(farm_produce_operation_dict)
     return jsonify(operations)
