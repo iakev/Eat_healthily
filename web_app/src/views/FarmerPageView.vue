@@ -37,6 +37,21 @@
                             <input class="input is-focused" type="text" placeholder="Address" v-model="address">
                         </div>  
                     </div>
+                    <br>
+                    <div class="file">
+                        <label class="file-label">
+                        <input class="file-input" type="file" @change="checkFarm" name="produceImage">
+                            <span class="file-cta">
+                                <span class="file-icon"> 
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Choose a farm image file...
+                                </span>
+                            </span> 
+                        </label>
+                    </div>
+                    <br>
                     <div class="buttons">
                         <button class="button is-link" @click="addFarms">Submit Farm</button>
                     </div>
@@ -45,6 +60,21 @@
                     <div class="container">
                         <div class="title">
                             <p class="has-text-centered">Add produce to farm</p>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <label class="checkbox">
+                                        <input type="checkbox" v-model="createProduce">
+                                    Add a produce to system?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="createProduce">
+                            <div class="buttons">
+                                <RouterLink to="/products"><button class="button is-link">Add produce</button></RouterLink>
+                            </div>
                         </div>
                         <div class="field-body">
                             <div class="field">
@@ -81,8 +111,37 @@
                                     <input class="input is-focused" type="date" placeholder="Planting Date" v-model="planting_date">
                                 </div>
                             </div>
+                            <div class="file">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" @change="checkFile" name="produceImage">
+                                    <span class="file-cta">
+                                        <span class="file-icon"> 
+                                            <i class="fas fa-upload"></i>
+                                        </span>
+                                        <span class="file-label">
+                                        Choose a image file...
+                                        </span>
+                                    </span> 
+                                </label>
+                            </div>
+                            <hr>
                             <div class="buttons">
                                 <button class="button is-link" @click="addFarmProduce">Submit Product</button>
+                            </div>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <label class="checkbox">
+                                        <input type="checkbox" v-model="createOperation">
+                                    Add an operation to system?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="createOperation">
+                            <div class="buttons">
+                                <RouterLink to="/operations"><button class="button is-link">Add Operation</button></RouterLink>
                             </div>
                         </div>
                         <div class="field-body">
@@ -154,7 +213,7 @@
                             </div>
                             <div v-if="createInput">
                                 <div class="buttons">
-                                    <RouterLink to="/inputs"><button class="button is-link"></button></RouterLink>>
+                                    <RouterLink to="/inputs"><button class="button is-link"> Add input</button></RouterLink>
                                 </div>
                             </div>
                             <div  v-if="addInput" class="select is-info">
@@ -213,7 +272,11 @@ export default{
             inputs: [],
             addInput: false,
             input_id: "",
-            createInput: false
+            createInput: false,
+            createProduce: false,
+            createOperation: false,
+            file: "",
+            farmImage: ""
         }
     },
     mounted () {
@@ -222,6 +285,9 @@ export default{
         this.getOperations();
     },
     methods: {
+        reloadPage() {
+            window.location.reload();
+        },
         async getFarms() {
             await axios
                 .get(`api/v1/farmers/${this.farmer_id}/farms`)
@@ -233,14 +299,19 @@ export default{
                 })
         },
         async addFarms() {
-            const data = {
-                farm_name: this.farmName,
-                address: this.address
+            const headers = {
+                'Content-Type': 'multipart/form-data'
             }
+            const farmData = new FormData();
+            farmData.append('farm_name', this.farmName);
+            farmData.append('address', this.address);
+            farmData.append('image_file', this.farmImage);
             await axios
-                .post(`api/v1/farmers/${this.farmer_id}/farms`, data)
+                .post(`api/v1/farmers/${this.farmer_id}/farms`, farmData, { headers })
                 .then(response => {
                     this.farm = response.data;
+                    alert('Farm added succesfuly');
+                    this.reloadPage();
                 })
                 .catch(error => {
                     console.log(error);
@@ -267,14 +338,19 @@ export default{
                     this.produce_id = this.products[i].id;
                 }
             }
-            const data = {
-                planting_date: this.planting_date
-            }
+            const headers = {
+                'Content-Type': 'multipart/form-data'
+
+            };
+            const payload = new FormData();
+            payload.append('planting_date', this.planting_date);
+            payload.append('image_file', this.file);
             await axios
-                .post(`api/v1/farms/${this.farm_id}/products/${this.produce_id}`, data)
+                .post(`api/v1/farms/${this.farm_id}/products/${this.produce_id}`, payload, { headers })
                 .then(response => {
                     this.farm_produce = response.data;
-                    console.log(this.farm_produce);          
+                    alert("Produce added succesfully");    
+                    this.reloadPage();     
                 })
                 .catch(error => {
                     console.log(error);
@@ -324,6 +400,8 @@ export default{
                     .then(response => {
                         this.operation = response.data;
                         console.log(this.operation);
+                        alert('Operation with input added succesfully');
+                        this.reloadPage();
                     })
                     .catch(error => {
                         console.log(error);
@@ -334,6 +412,8 @@ export default{
                     .then(response => {
                         this.operation = response.data;
                         console.log(this.operation);
+                        alert('Operation added succesfully');
+                        this.reloadPage();
                     })
                     .catch(error => {
                         console.log(error);
@@ -365,6 +445,12 @@ export default{
                 .catch(error => {
                     console.log(error);
                 })
+        },
+        checkFile(event) {
+            this.file = event.target.files[0];
+        },
+        checkFarm(event) {
+            this.farmImage = event.target.files[0];
         }
     }
 }
