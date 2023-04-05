@@ -65,15 +65,6 @@ export default{
                 .catch(error => {
                     console.log(error);
                 })
-        },
-        recommendSafety() {
-            for (let i = 0; i < this.operations.length; i++) {
-                if (this.operations[i].inputs.length != 0 ) {
-                    for (let j = 0; j < this.operations[i].inputs.length; j++) {
-
-                    }
-                }
-            }
         }
     }
 }
