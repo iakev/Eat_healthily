@@ -36,7 +36,7 @@
                     <div class="column is-3" v-for="product in products" :key="product.id">
                         <div class="box">
                             <figure class="image mb-4">
-                                <img src="https://images.pexels.com/photos/6152391/pexels-photo-6152391.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1s" alt="">
+                                <img :src="product.image_file" alt="">
                             </figure>
                             <h3 class="is-size-4">
                                 {{ product.produce_name }}
