@@ -55,6 +55,8 @@ class Base(DeclarativeBase):
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict.keys():
             del new_dict["_sa_instance_state"]
+        if "toxicity_level" in new_dict.keys():
+            new_dict["toxicity_level"] = str(new_dict['toxicity_level'])
         return new_dict
     
     def delete(self):
