@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Defines the relationship betwen operations and products API endpoints"""
 from api.v1.views import app_views
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import abort, jsonify, make_response, request
 from models import storage
 from models.farms import Farm, FarmProduce, FarmProduceOperation
@@ -38,7 +38,9 @@ def post_product_operation(farm_id,product_id,farm_product_id, operation_id, inp
         abort(400, description="Missing operation_date")
     description = data.get('description')
     if not description:
-        abort(400, description="Missing description")            
+        abort(400, description="Missing description")
+    if operation.operation_name == "Harvesting" or operation.operation_name == "harvesting":
+        farm_produce.harvest_date =  operation_date       
     data['farm_produce_id'] = farm_produce.id    
     data['operation_id'] = operation.id
     data['operation_date'] = operation_date
@@ -76,18 +78,22 @@ def get_product_operations(farm_product_id):
         farm_produce_operation_dict['inputs'] = []
         for input in farm_produce_operation.inputs:
             farm_produce_operation_dict['inputs'].append(input.to_dict())
-            if input.pre_harvest_interval and input.pre_harvest_interval < (farm_produce_operation.operation_date - farm_produce_operation_dict['harvest_date']).days:
+            if input.pre_harvest_interval and timedelta(int(input.pre_harvest_interval)) < (farm_produce_operation_dict['harvest_date'] - farm_produce_operation.operation_date):
                 farm_produce_operation_dict['phi_safe'] = True
             else:
                 farm_produce_operation_dict['phi_safe'] = False
-            if input.toxicity_level and input.toxicty_level !='level_4_slightly_toxic' or input.toxicity_level != 'level_5_non_toxic':
+            if input.toxicity_level and (input.toxicity_level !='Slightly toxic' or input.toxicity_level != 'Virtually non-toxic'):
                 farm_produce_operation_dict['toxic_safe'] = False
             else:
                 farm_produce_operation_dict['toxic_safe'] = True
-            if input.expiry_data and input.expiry_data < farm_produce_operation.operation_date:
+            if input.expiry_date and input.expiry_date < farm_produce_operation.operation_date:
                 farm_produce_operation_dict['expiry_safe'] = False
             else:
                 farm_produce_operation_dict['expiry_safe'] = True
+        if len(farm_produce_operation.inputs) == 0:
+            farm_produce_operation_dict['phi_safe'] = True
+            farm_produce_operation_dict['toxic_safe'] = True
+            farm_produce_operation_dict['expiry_safe'] = True
         if farm_produce_operation_dict not in operations:
             operations.append(farm_produce_operation_dict)
     return jsonify(operations)
