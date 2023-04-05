@@ -27,8 +27,9 @@ class Input(Base):
     expiry_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     source: Mapped[str] = mapped_column(String(128), nullable=False)
     cautions: Mapped[str] = mapped_column(String(255), nullable=True)
-    pre_harvest_interval: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    toxicity_level: Mapped[enum.Enum] = mapped_column(Enum(ToxLevels), nullable=True)
+    pre_harvest_interval: Mapped[str] = mapped_column(String(128), nullable=True)
+    toxicity_level: Mapped[enum.Enum] = mapped_column(Enum(ToxLevels, 
+        values_callable=lambda x: [str(member.value) for member in ToxLevels]),nullable=True)
     ingredient: Mapped[str] = mapped_column(String(255), nullable=True)
     image_file: Mapped[str] = mapped_column(String(128), nullable=True)
     label_file: Mapped[str] = mapped_column(String(128), nullable=True)
