@@ -17,7 +17,7 @@
             <div class="column is-6" v-for="farmProduce in farmProducts" :key="farmProduce.id">
                 <div class="column is-6 box">
                     <figure class="image mb-4">
-                        <img src="" alt="">
+                        <img :src="farmProduce.image_file" alt="">
                     </figure>
                     <p> Produce name {{ farmProduce.produce_name }}</p>
                     <p>Farm name {{ farmProduce.farm_name }} at {{ farmProduce.address }}</p>
