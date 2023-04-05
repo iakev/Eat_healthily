@@ -15,20 +15,14 @@
         <div class="section">
             <div class="container">
                 <div class="field">
-                    <label class="label">Input name</label>
+                    <label class="label">Produce name</label>
                     <div class="control">
-                        <input class="input is-focused" type="text" placeholder="Input Name" v-model="selected_input">
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Input source</label>
-                    <div class="control">
-                        <input class="input is-focused" type="text" placeholder="Input Source" v-model="selected_source">
+                        <input class="input is-focused" type="text" placeholder="Produce Name" v-model="productName">
                     </div>
                 </div>
                 <div class="file">
                     <label class="file-label">
-                        <input class="file-input" type="file" name="inputImage">
+                        <input class="file-input" type="file" @change="checkFile" name="produceImage">
                         <span class="file-cta">
                             <span class="file-icon"> 
                                 <i class="fas fa-upload"></i>
@@ -36,8 +30,12 @@
                             <span class="file-label">
                                 Choose a file...
                             </span>
-                        </span>
+                        </span> 
                     </label>
+                </div>
+                <hr>
+                <div class="buttons">
+                    <button class="button is-link" @click="onSubmit">Add produce</button>
                 </div>
             </div>
         </div>
@@ -51,9 +49,39 @@ export default {
     name: 'ProductView',
     data () {
         return {
-            selected_input: "",
-            selected_source: "",
-            selected_image: ""
+            productName: "",
+            file: "",
+            product: {}
+        }
+    },
+    methods: {
+        reloadPage() {
+            window.location.reload();
+        },
+        checkFile(event) {
+            this.file = event.target.files[0];
+        },
+        onSubmit() {
+            const payload = new FormData();
+            payload.append('produce_name', this.productName);
+            payload.append('image_file', this.file);
+
+            this.createProduct(payload);
+        },
+        async createProduct(payload) {
+            const headers = {
+                'Content-Type': 'multipart/form-data'
+            }
+            await axios
+                .post('api/v1/products', payload, { headers })
+                .then(response => {
+                    this.product = response.data;
+                    alert('Succesfuly added');
+                    this.reloadPage();
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         }
     }
 }
