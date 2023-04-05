@@ -5,10 +5,11 @@ import LoginView from '../views/LoginView.vue'
 import FarmerPageView from '../views/FarmerPageView.vue'
 import ConsumerPageView from '../views/ConsumerPageView.vue'
 import FarmProductsView from '../views/FarmProductsView.vue'
-// import FarmProductView from '../views/FarmProductView.vue'
+import ProductView from '../views/ProductView.vue'
 import TrackingView from '../views/TrackingView.vue'
 import FarmPageView from '../views/FarmPageView.vue'
 import InputView from '../views/InputView.vue'
+import OperationView from '../views/OperationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -62,6 +63,16 @@ const router = createRouter({
       path: '/inputs',
       name: 'inputs',
       component: InputView
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: ProductView
+    },
+    {
+      path: '/operations',
+      name: 'operations',
+      component: OperationView
     },
     {
       path: '/about',
