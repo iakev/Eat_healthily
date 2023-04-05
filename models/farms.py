@@ -45,7 +45,7 @@ class FarmProduce(Base):
     farm_id: Mapped[str] = mapped_column(ForeignKey("farms.id", ondelete="CASCADE"))
     produce_id: Mapped[str] = mapped_column(ForeignKey("products.id", ondelete="CASCADE"))
     planting_date: Mapped[datetime] =  mapped_column(DateTime, nullable=False)
-    image_file: Mapped[str] = mapped_column(String(128), nullable=False)
+    image_file: Mapped[str] = mapped_column(String(128), nullable=True)
     harvest_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
     farm: Mapped["Farm"] = relationship(back_populates="products")
