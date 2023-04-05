@@ -7,8 +7,13 @@ from flask_cors import CORS
 from flasgger import Swagger
 from flasgger.utils import swag_from
 
+
+UPLOAD_FOLDER = '/home/kirimi/alx/portfolio_project/Eat_healthily/web_app/public/uploads'
+
+
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/api/v1/*":{"origins":"*"}})
 
