@@ -3,26 +3,48 @@
 from api.v1.views import app_views
 from datetime import datetime
 from flask import abort, jsonify, make_response, request
+from flask import current_app
 from models import storage
 from models.farms import Farm, FarmProduce
 from models.products import Produce
+import os
+from werkzeug.utils import secure_filename
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'pdf'}
+
 
 time_format = "%Y-%m-%d"
+
+def allowed_filename(filename):
+    """validate an extension is valid before upload"""
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def upload_file(file):
+    """Method to upload files and save them in a folder specified"""
+    filename = secure_filename(file.filename)
+    return filename
+
 @app_views.route('/farms/<farm_id>/products/<product_id>', methods=['POST'], strict_slashes=False)
 def post_produce_farm(farm_id, product_id):
     """Links a product with a farm"""
-    if not request.get_json():
-        abort(400, description="Not a valid JSON")
     farm = storage.get(Farm, farm_id)
     if not farm:
         abort(404)
     produce = storage.get(Produce, product_id)
     if not produce:
         abort(404)
-    if 'planting_date' not in request.get_json():
+    data = request.form.to_dict()
+    if request.files:
+        if 'image_file' in request.files:
+            image_file = request.files['image_file']
+            if image_file and allowed_filename(image_file.filename):
+                image_file_name = upload_file(image_file)
+                image_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'],  image_file_name))
+                data['image_file'] = '/uploads' + '/' + image_file_name
+    if 'planting_date' not in data:
         abort(400, description="Missing planting_date")
     else:
-        data = request.get_json()
         date_str = data.get('planting_date')
         planting_date = datetime.strptime(date_str, time_format)
         if not planting_date:
