@@ -18,8 +18,6 @@
                         <p>Operation {{ operation.operation_name }} carried out on {{ operation.produce_name }}</p>
                         <p>Operation {{ operation.operation_name }} on the {{ operation.operation_date }}</p>
                         <p>Operation description {{ operation.description }}</p>
-                        <p>Farm name {{ operation.farm_name }} at {{ operation.address }}</p>
-                        <p>Planted on {{ operation.planting_date }} and harvested on {{ operation.harvest_date }}</p>
                         <div class=" column is-6 box" v-for="input in operation.inputs" :key="input.id">
                             <p>Input  {{ input.input_name }}</p>
                             <p>Input Source {{ input.source }}</p>
