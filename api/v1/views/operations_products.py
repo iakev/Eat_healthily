@@ -110,15 +110,6 @@ def get_operation_products(operation_id):
             products.append(produce_operations.produce.to_dict())
     return jsonify(products)
 
-# @app_views.route('/<produce_operation_id>', methods=['GET'], strict_slashes=False)
-# def get_produce_operation(produce_operation_id):
-#     """Retrieve a specific operation"""
-#     produce_operation = storage.get(ProduceOperation, produce_operation_id)
-#     if not produce_operation:
-#         abort(404)
-#     produce_operation_dict = produce_operation.to_dict()
-#     produce_operation_dict['operation_name'] = produce_operation.operation.operation_name
-#     return jsonify(produce_operation_dict)
 
 @app_views.route('/<farm_produce_operation_id>', methods=['PUT'], strict_slashes=False)
 def get_produce_operation(farm_produce_operation_id):
