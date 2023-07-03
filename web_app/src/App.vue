@@ -1,33 +1,15 @@
-<!-- <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script> -->
 <template>
-  <!-- <header> -->
-    <!-- <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" /> -->
-
-      <!-- <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div> -->
     <div id="wrapper">
       <nav class="navbar is-info" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
           <RouterLink class="navbar-item" to="/consumerdash"><b>Eat Healthily</b></RouterLink>
-        
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBurger">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
           </a>
         </div>
-        <div class="navbar-menu">
-        <!-- <div class="navbar-start">
-        </div> -->
+        <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu}">
           <div class="navbar-end">
             <RouterLink class="navbar-item" to="/consumerdash">Home</RouterLink>
             <RouterLink class="navbar-item" to="/login">Login</RouterLink>
