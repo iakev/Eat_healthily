@@ -17,7 +17,7 @@
                 and what's not safe to eat. This is achieved by tracking farm produce from planting to harvesting</i></p>
             </div>
             <div class="buttons">
-              <RouterLink to="/consumerdash"><button class="button is-info">Track Products</button></RouterLink>
+              <a href="https://youtu.be/Vrf0ROGqU_Y"><button class="button is-info">View Demo</button></a>
             </div>
           </div>
           <div class="column is-four-fifths">
@@ -79,7 +79,7 @@
               <p class="subtitle">With the rising cases of lifestyle diseases, 
                 unfortunately unscrouplous farmers and business men. The reality is that, 
                 consumers are not sure who to trust with their farm produces. So this project aims at finding a way to ensure
-                safe food consumption. At the same time it attempts to act as a collecting point for all farm realted data. 
+                safe food consumption. At the same time it attempts to act as a collecting point for all farm related data. 
                 The importance of collecting this data is for ease of management and ultimately as a marketing tool, since quality is assured.
                 This project is a Portfolio project for <i><a href="https://www.alxafrica.com/software-engineering/">ALX Africa Software</a></i>
                 </p>  
@@ -94,7 +94,7 @@
             <a href="linkedin.com/in/kevin-kirimi-mwongera"><img src=/uploads/icons8-linkedin-2-16.png alt=""></a>
           </div>
           <div class="content has-text-centered">
-            <p><strong>This code is hosted at<a href="https://github.com/iakev/Eat_healthily.git">github</a></strong></p>
+            <p><strong>This code is hosted at <a href="https://github.com/iakev/Eat_healthily.git">github</a></strong></p>
           </div>
         </div>
         <br>
