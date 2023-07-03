@@ -1,56 +1,59 @@
 asttokens==2.2.1
 async-timeout==4.0.2
-attrs @ file:///home/conda/feedstock_root/build_artifacts/attrs_1671632566681/work
+attrs==22.2.0
 backcall==0.2.0
 certifi==2022.12.7
-click @ file:///home/conda/feedstock_root/build_artifacts/click_1666798198223/work
+click==8.1.3
 comm==0.1.3
 debugpy==1.6.7
 decorator==5.1.1
 distlib==0.3.6
 dnspython==2.3.0
 executing==1.2.0
-flasgger @ file:///home/conda/feedstock_root/build_artifacts/flasgger_1618577453511/work
-Flask @ file:///croot/flask_1671217343254/work
-Flask-Cors @ file:///tmp/build/80754af9/flask-cors_1609957731919/work
-greenlet @ file:///home/conda/feedstock_root/build_artifacts/greenlet_1674937639600/work
-importlib-metadata @ file:///home/conda/feedstock_root/build_artifacts/importlib-metadata_1672612343532/work
-importlib-resources @ file:///home/conda/feedstock_root/build_artifacts/importlib_resources_1676919000169/work
+flasgger==0.9.5
+Flask==2.2.2
+Flask-Cors==3.0.10
+greenlet==2.0.2
+importlib-metadata==6.0.0
+importlib-resources==5.12.0
 ipykernel==6.23.1
 ipython==8.13.2
-itsdangerous @ file:///home/conda/feedstock_root/build_artifacts/itsdangerous_1648147185463/work
+itsdangerous==2.1.2
 jedi==0.18.2
-Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1654302431367/work
-jsonschema @ file:///home/conda/feedstock_root/build_artifacts/jsonschema-meta_1669810440410/work
+Jinja2==3.1.2
+jsonschema==4.17.3
 jupyter_client==8.2.0
 jupyter_core==5.3.0
-MarkupSafe @ file:///home/conda/feedstock_root/build_artifacts/markupsafe_1674135787083/work
+MarkupSafe==2.1.2
 matplotlib-inline==0.1.6
-mistune @ file:///home/conda/feedstock_root/build_artifacts/mistune_1675771498296/work
+mistune==2.0.5
 mongoengine==0.27.0
-mysqlclient @ file:///home/conda/feedstock_root/build_artifacts/mysqlclient_1666954470064/work
+mysqlclient==2.0.3
 nest-asyncio==1.5.6
 parso==0.8.3
 pickleshare==0.7.5
-pkgutil_resolve_name @ file:///home/conda/feedstock_root/build_artifacts/pkgutil-resolve-name_1633981968097/work
+pip==23.0.1
+pkgutil_resolve_name==1.3.10
 platformdirs==3.0.0
 prompt-toolkit==3.0.38
 pure-eval==0.2.2
 Pygments==2.15.1
 pymongo==4.3.3
-pyrsistent @ file:///home/conda/feedstock_root/build_artifacts/pyrsistent_1672681463845/work
+pyrsistent==0.19.3
 python-dateutil==2.8.2
-PyYAML @ file:///home/conda/feedstock_root/build_artifacts/pyyaml_1666772395347/work
+PyYAML==6.0
 pyzmq==25.0.2
 redis==4.5.5
-six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
-SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/sqlalchemy_1678748797489/work
+setuptools==67.6.0
+six==1.16.0
+SQLAlchemy==2.0.6
 stack-data==0.6.2
 tornado==6.3.2
 tqdm==4.65.0
 traitlets==5.9.0
-typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1678559861143/work
+typing_extensions==4.5.0
 virtualenv==20.19.0
 wcwidth==0.2.6
-Werkzeug @ file:///home/conda/feedstock_root/build_artifacts/werkzeug_1676411946679/work
-zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1677313463193/work
+Werkzeug==2.2.3
+wheel==0.40.0
+zipp==3.15.0
